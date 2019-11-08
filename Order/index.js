@@ -1,7 +1,9 @@
 const port = 80,
   express = require('express'),
   app = express(),
-  logger = require('./controllers/logController');
+  logger = require('./controllers/logController'),
+  menuController = require('./controllers/menuController'),
+  menu = require('./views/menuView');
 
 app.use((req, res, next) => {
    logger.log(('GET request for ' + req.originalUrl));
@@ -14,11 +16,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/version', (req, res) => {
-  res.send('This is version 0 of the HotBurger service.');
+  res.send('This is version 1 of the HotBurger service.');
   logger.log(('GET for ' + req.originalUrl + ' successful.'));
 });
 
-app.get('/logs', logger.printLog);
+app.get('/getmenu', menu.printMenu);
+
+app.post('/purchase/:item/:quantity', (req, res) => {
+  let item = req.params.item;
+  let quantity = req.params.quantity;
+  let price = menuController.getPrice(item);
+
+  res.send('Successfully ordered ' + quantity + ' ' + item + '(s)');
+  logger.log(`ORDER ${item} ${price} ${quantity}`);
+});
 
 app.get('*', (req, res) => {
   logger.log(('GET for ' + req.originalUrl + ' failed - does not exist.'));
