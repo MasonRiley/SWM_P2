@@ -1,14 +1,14 @@
 {
-  "name": "serve_html",
+  "name": "express_routes",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mason Riley",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "http-status-codes": "^1.3.2"
+    "express": "^4.17.1"
   }
 }

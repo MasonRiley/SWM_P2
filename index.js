@@ -1,35 +1,30 @@
 const port = 80,
-  http = require("http"),
-  httpStatus = require("http-status-codes"),
-  fs = require("fs");
+  express = require('express'),
+  app = express(),
+  logger = require('./controllers/logController');
 
-const routeMap = {
-  "/": "views/index.html"
-};
+app.use((req, res, next) => {
+   logger.log(('GET request for ' + req.originalUrl));
+   next();
+});
 
-const getViewURL = (url) => {
-  return `views${url}.html`;
-};
+app.get('/', (req, res) => {
+  res.send('Welcome to HotBurger!');
+  logger.log(('GET for ' + req.originalUrl + ' successful.'));
+});
 
-var access = fs.createWriteStream('/var/log/hotburger/api.log');
-process.stdout.write = access.write.bind(access);
+app.get('/version', (req, res) => {
+  res.send('This is version 0 of the HotBurger service.');
+  logger.log(('GET for ' + req.originalUrl + ' successful.'));
+});
 
-http
-  .createServer((req, res) => {
-    let viewURL = getViewURL(req.url);
-    fs.readFile(viewURL, (error, data) => {
-      if(error) {
-        res.writeHead(httpStatus.NOT_FOUND);
-        res.write("<h1>Welcome to Burger Place!</h1>");
-      } else {
-        res.writeHead(httpStatus.OK, {
-          "Content-Type": "text/html"
-        });
-        res.write(data);
-      }
-      res.end();
-    });
-  })
+app.get('/logs', logger.printLog);
 
-  .listen(port);
-  console.log(`The server has started and is listening on port number: ${port}`);
+app.get('*', (req, res) => {
+  logger.log(('GET for ' + req.originalUrl + ' failed - does not exist.'));
+  res.send('404: Page not found.');
+});
+
+app.listen(port, () => {
+    logger.log(`The server has started and is listening on port number: ${port}`);
+});
