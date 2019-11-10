@@ -64,8 +64,18 @@ exports.getTopSeller = (req, res) => {
     }
   }
 
-  index = indexOfMax(quantities);
-  res.send('Top seller thus far are ' + items[index].toLowerCase() + 's.');
+  var saleExists = false;
+  for(i = 0; i < quantities.length; ++i) {
+    if(quantities[i] > 0) saleExists = true;
+  }
+
+  if(saleExists) {
+    index = indexOfMax(quantities);
+    res.send('Top seller thus far are ' + items[index].toLowerCase() + 's.');
+  }
+  else {
+    res.send('No items have been sold yet.');
+  }
 }
 
 exports.getRequestCount = (req, res) => {

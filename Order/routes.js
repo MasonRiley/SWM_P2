@@ -4,11 +4,6 @@ const express = require('express'),
       menuController = require('./controllers/menuController'),
       menu = require('./views/menuView');
 
-// router.use((req, res, next) => {
-//    logger.log(('GET request for ' + req.originalUrl));
-//    next();
-// });
-
 router.get('/', (req, res) => {
   res.send('Welcome to HotBurger!');
   logger.log(('GET 200 - request for ' + req.originalUrl + ' successful.'));

@@ -5,6 +5,4 @@ const port = 8080,
 
 app.use(require('./routes'));
 
- app.listen(port, () => {
-     //logger.log(`The server has started and is listening on port number: ${port}`);
-});
+app.listen(port);

@@ -6,5 +6,5 @@ const port = 80,
 app.use(require('./routes'));
 
  app.listen(port, () => {
-     //logger.log(`The server has started and is listening on port number: ${port}`);
+     logger.log(`The server has started and is listening on port number: ${port}`);
 });
