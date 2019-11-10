@@ -117,7 +117,7 @@ exports.getLastRequestStatus = (req, res) => {
       }
     }
   }
-  
+
   var successCode = "200";
   line = requestLine.split(" ");
   strComp = successCode.localeCompare(line[3]);
